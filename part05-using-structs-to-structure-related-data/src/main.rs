@@ -107,9 +107,42 @@ fn main() {
 
    impl Rectangle {
       fn area(&self) -> u32 {
-         return self.height * self.width;
+         self.height * self.width
+      }
+      fn width(&self) -> bool {
+         self.width > 0
+      }
+      fn can_hold(&self, other: &Rectangle) -> bool {
+         self.width > other.width && self.height > other.height
+      }
+      fn square(size: u32) -> Self {
+         Self {
+            width: size,
+            height: size,
+         }
       }
    }
 
-   //Start again after Listing 5-13
+   if rect4.width() {
+      println!("The rectangle has a nonzero width; it is {}", rect4.width);
+   }
+
+   let rect5 = Rectangle {
+      width: 30,
+      height: 50,
+   };
+   let rect6 = Rectangle {
+      width: 10,
+      height: 40,
+   };
+   let rect7 = Rectangle {
+      width: 60,
+      height: 45,
+   };
+
+   println!("Can rect1 hold rect2? {}", rect5.can_hold(&rect6));
+   println!("Can rect1 hold rect3? {}", rect5.can_hold(&rect7));
+
+   let sq = Rectangle::square(3);
+   println!("square is {:?}", sq); // https://stackoverflow.com/a/38157410
 }
