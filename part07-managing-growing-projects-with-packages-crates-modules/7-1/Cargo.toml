@@ -1,0 +1,6 @@
+[package]
+name = "part07-managing-growing-projects-with-packages-crates-modules"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]

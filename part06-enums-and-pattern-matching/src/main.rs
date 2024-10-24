@@ -1,5 +1,3 @@
-use message::Message::*;
-
 // 6. Enums and Pattern Matching
 fn main() {
 
@@ -64,12 +62,12 @@ fn main() {
     //     V6(Ipv6Addr),
     // }
 
-    // enum Message {
-    //     Quit,
-    //     Move { x: i32, y: i32 },
-    //     Write(String),
-    //     ChangeColor(i32, i32, i32),
-    // }
+    enum Message {
+        Quit,
+        Move { x: i32, y: i32 },
+        Write(String),
+        ChangeColor(i32, i32, i32),
+    }
 
     struct QuitMessage; // unit struct
     struct MoveMessage {
@@ -107,7 +105,7 @@ fn main() {
         Penny,
         Nickel,
         Dime,
-        Quarter,
+        Quarter(UsState),
     }
 
     let c = Coin::Penny;
@@ -115,7 +113,7 @@ fn main() {
         Coin::Penny => 1,
         Coin::Nickel => 5,
         Coin::Dime => 10,
-        Coin::Quarter => 25,
+        Coin::Quarter(state) => 25,
     };
 
     fn value_in_cents(coin: Coin) -> u8 {
@@ -126,7 +124,7 @@ fn main() {
             }
             Coin::Nickel => 5,
             Coin::Dime => 10,
-            Coin::Quarter => 25,
+            Coin::Quarter(state) => 25,
         }
     }
     let _ = value_in_cents(Coin::Nickel);
@@ -158,18 +156,52 @@ fn main() {
     //     ChangeColor(i32, i32, i32),
     // }
 
-    let message = ChangeColor(1,2,3);
+    //
+    //
+    // let message = Message::ChangeColor(1,2,3);
 
     // use Message::Quit;
 
-    let y = match message {
-        Quit => {},
-        Move { x, y } => {
-            println!("{}", x);
-            println!("{}", y);
-        },
-        Write(_) => {},
-        ChangeColor(_, _, _) => {},
-    };
+    // let y = match message {
+    //     Quit => {},
+    //     Message::Move { x, y } => {
+    //         println!("{}", x);
+    //         println!("{}", y);
+    //     },
+    //     Message::Write(_) => {},
+    //     Message::ChangeColor(_, _, _) => {},
+    // };
 
+    let dice_roll = 9;
+    match dice_roll {
+        3 => add_fancy_hat(),
+        7 => remove_fancy_hat(),
+        //other => move_player(other),
+        _ => reroll(),
+    }
+
+    fn add_fancy_hat() {}
+    fn remove_fancy_hat() {}
+    fn move_player(num_spaces: u8) {}
+    fn reroll() {}
+
+    // 6.3
+
+    let config_max = Some(3u8);
+    match config_max {
+        Some(max) => println!("The maximum is configured to be {max}"),
+        None => (),
+    }
+
+    if let Some(max) = config_max {
+        println!("The maximum is configured to be {max}")
+    }
+
+    let coin = Coin::Quarter(UsState::Alabama);
+    let mut count = 0;
+    if let Coin::Quarter(state) = coin {
+        println!("State quarter from {state:?}!");
+    } else {
+        count += 1;
+    }
 }
